@@ -29,13 +29,20 @@ public class Main {
         //BookController bookController = new BookController();
         //ArrayList<Object> sortedList = bookController.find2();
 
-        BookModel bookModel = new BookModel();
+        AuthorModel authorModel = new AuthorModel();
+        ReaderModel readerModel = new ReaderModel();
+        BorrowingModel borrowingModel = new BorrowingModel(readerModel);
+        BookModel bookModel = new BookModel(authorModel, borrowingModel);
 
 //        String[] filters = {"name: with"};
 //        String[] update = {"author_id: 2"};
 //        ArrayList<Model> sortedList = bookModel.update(filters, update);
 //        bookModel.remove(filters);
         ArrayList<Model> sortedList = bookModel.find();
+        ArrayList<Model> sortedAuthors = authorModel.find();
+        ArrayList<Model> sortedReaders = readerModel.find();
+        ArrayList<Model> sortedBorrowings = borrowingModel.find();
+
 
 
         if (sortedList != null) {
@@ -44,8 +51,8 @@ public class Main {
             }
         }
 
-        AuthorModel authorModel = new AuthorModel();
-        ArrayList<Model> sortedAuthors = authorModel.find();
+
+
 
         if (sortedAuthors != null) {
             for (Model author: sortedAuthors) {
@@ -53,8 +60,8 @@ public class Main {
             }
         }
 
-        ReaderModel readerModel = new ReaderModel();
-        ArrayList<Model> sortedReaders = readerModel.find();
+
+
 
         if (sortedReaders != null) {
             for (Model reader: sortedReaders) {
@@ -62,12 +69,51 @@ public class Main {
             }
         }
 
-        BorrowingModel borrowingModel = new BorrowingModel();
-        ArrayList<Model> sortedBorrowings = borrowingModel.find();
+
+
 
         if (sortedBorrowings != null) {
             for (Model borrowing: sortedBorrowings) {
                 System.out.println(borrowing);
+            }
+        }
+
+//        BorrowingQueue borrowingQueue = new BorrowingQueue(borrowingModel);
+//
+//        System.out.println(borrowingQueue);
+//        borrowingQueue.enqueueExisting(sortedBorrowings.get(0));
+//        System.out.println(borrowingQueue);
+//        borrowingQueue.enqueueExisting(sortedBorrowings.get(1));
+//        System.out.println(borrowingQueue);
+//        borrowingQueue.enqueueExisting(sortedBorrowings.get(2));
+//        System.out.println(borrowingQueue);
+//
+//        borrowingQueue.dequeue();
+//        System.out.println(borrowingQueue);
+//        borrowingQueue.dequeue();
+//        System.out.println(borrowingQueue);
+//        borrowingQueue.dequeue();
+//        System.out.println(borrowingQueue);
+//
+//
+//        System.out.println(borrowingQueue.size());
+//
+//
+//        sortedBorrowings = borrowingModel.find();
+//
+//        if (sortedBorrowings != null) {
+//            for (Model borrowing: sortedBorrowings) {
+//                System.out.println(borrowing);
+//            }
+//        }
+
+        sortedList = bookModel.sortBy("author");
+
+
+        if (sortedList != null) {
+            for (Model book: sortedList) {
+                System.out.println(book);
+                System.out.println(book.getWaitingQueue());
             }
         }
 

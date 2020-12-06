@@ -15,7 +15,7 @@ public class RetrieveData {
      * Reads books from csv file using FileReader and store the result in an ArrayList.
      * Throws an error if the file cannot be read or if a line does not match the model of the object.
      */
-    public static void loadBooks(BookModel bookModel){
+    public static void loadBooks(BookModel bookModel, AuthorModel authorModel, BorrowingModel borrowingModel){
         ArrayList<Model> arrayBook = new ArrayList<>();
 
         String text;
@@ -35,6 +35,7 @@ public class RetrieveData {
                             Integer.parseInt(textBook[2]),
                             textBook[3]
                     );
+                    newBook.setRelations(authorModel, borrowingModel);
                     arrayBook.add(newBook);
                 }
                 currentLine++;
@@ -132,7 +133,7 @@ public class RetrieveData {
      * Reads authors from csv file using FileReader and store the result in an ArrayList.
      * Throws an error if the file cannot be read or if a line does not match the model of the object.
      */
-    public static void loadBorrowings(BorrowingModel borrowingModel){
+    public static void loadBorrowings(BorrowingModel borrowingModel, ReaderModel readerModel){
         ArrayList<Model> arrayBorrowing = new ArrayList<>();
 
         String text;
@@ -154,6 +155,7 @@ public class RetrieveData {
                             textBorrowing[4],
                             textBorrowing[5]
                     );
+                    newBorrowing.setRelations(readerModel);
                     arrayBorrowing.add(newBorrowing);
                 }
                 currentLine++;

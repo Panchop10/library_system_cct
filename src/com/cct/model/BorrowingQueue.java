@@ -1,21 +1,45 @@
 package com.cct.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BorrowingQueue {
+    private BorrowingModel borrowingModel;
     private int size;
     private NodeQueue front;
     private NodeQueue rear;
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-    public BorrowingQueue(){
+    public BorrowingQueue(BorrowingModel borrowingModel){
+        this.borrowingModel = borrowingModel;
         this.size = 0;
         this.front = null;
         this.rear = null;
     }
 
     /**
-     * Adds an entry to the back of the queue
+     * Create a new borrowing object and add it to the database, then enqueue it to the queue.
+     * @param book_id book that is going to be added.
+     * @param reader_id reader who borrowed the book.
+     */
+    public void enqueue(int book_id, int reader_id){
+        BorrowingModel newBorrowing = borrowingModel.create(
+                book_id,
+                reader_id,
+                null,
+                null,
+                "queued"
+        );
+
+        enqueueExisting(newBorrowing);
+    }
+
+    /**
+     * Adds an entry to the back of the queue.
+     * This method is used to load borrowing to a book, it won't create a new borrowing in the database.
      * @param newBorrowing new entry to add to the queue
      */
-    public void enqueue(BorrowingModel newBorrowing){
+    public void enqueueExisting(Model newBorrowing){
         NodeQueue newNode = new NodeQueue(newBorrowing, null,null);
         // if the size is 0, add the new element
         if(size == 0){
@@ -37,14 +61,19 @@ public class BorrowingQueue {
      * Removes an entry from the front of the queue
      * @return BorrowingModel in the front.
      */
-    public BorrowingModel dequeue(){
+    public Model dequeue(){
         // return null if the queue is empty
         if(size==0){
             return null;
         }
 
-        // element that will be returned
-        BorrowingModel toReturn = this.front.getBorrowing();
+        // update status of the borrowing in the database.
+        Date date = new Date();
+        String[] filters = {"id: " + this.front.getBorrowing().getId()};
+        String[] update = {"status: active", "date_borrowed: "+formatter.format(date)};
+
+        // element that will be returned - execute update
+        Model toReturn = borrowingModel.update(filters, update).get(0);
 
         // remove the element by assigning front to the previous element.
         this.front = this.front.getPrevious();
@@ -62,7 +91,7 @@ public class BorrowingQueue {
      * Looks at the entry at the front of the queue without removing it
      * @return BorrowingModel at the front of the queue.
      */
-    public BorrowingModel first(){
+    public Model first(){
         if(size==0){
             return null;
         }
@@ -74,7 +103,7 @@ public class BorrowingQueue {
      * Looks at the entry at the back of the queue without removing it
      * @return BorrowingModel at the rear of the queue.
      */
-    public BorrowingModel last(){
+    public Model last(){
         if(size==0){
             return null;
         }
@@ -110,8 +139,7 @@ public class BorrowingQueue {
             toReturn += tempQueue.getBorrowing().getId() + " ";
             tempQueue = tempQueue.getNext();
         }
-        // remove blank spaces
-        toReturn = toReturn.trim();
+
         toReturn += "]";
 
         return toReturn;

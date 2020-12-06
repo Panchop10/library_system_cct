@@ -4,6 +4,7 @@ import com.cct.database.RetrieveData;
 import com.cct.database.StoreData;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,9 +13,13 @@ public class BookModel extends Model{
     private String name;
     private int author_id;
     private String isbn;
+    private BorrowingModel borrowingModel;
+    private AuthorModel authorModel;
 
     // Load info from the csv files when the class is instantiated.
-    public BookModel(){
+    public BookModel(AuthorModel authorModel, BorrowingModel borrowingModel){
+        this.authorModel = authorModel;
+        this.borrowingModel = borrowingModel;
         loadData();
     }
 
@@ -53,12 +58,22 @@ public class BookModel extends Model{
     }
 
     /**
+     * Set relationships for future joins in the queries.
+     * @param authorModel pointer of the model author.
+     * @param borrowingModel pointer of the model borrowing.
+     */
+    public void setRelations(AuthorModel authorModel, BorrowingModel borrowingModel){
+        this.authorModel = authorModel;
+        this.borrowingModel = borrowingModel;
+    }
+
+    /**
      * Returns value of the the attributes of the object as String
      * @param attribute that is going to be gotten from the element
      * @return value of the attribute as string
      */
     @Override
-    String get(String attribute) {
+    public String get(String attribute) {
         switch (attribute){
             case "id":
                 return String.valueOf(getId());
@@ -78,7 +93,7 @@ public class BookModel extends Model{
     @Override
     void loadData() {
         // load all the information from the csv files in the folder database and store the results in memory.
-        RetrieveData.loadBooks(this);
+        RetrieveData.loadBooks(this, this.authorModel, this.borrowingModel);
     }
 
     /**
@@ -146,8 +161,34 @@ public class BookModel extends Model{
         this.isbn = isbn;
     }
 
+
+    /**
+     * returns the waiting queue of the book.
+     * @return custom waiting queue.
+     */
+    @Override
+    public BorrowingQueue getWaitingQueue() {
+        BorrowingQueue waitingQueue = new BorrowingQueue(this.borrowingModel);
+
+        String[] filters = {"book_id: " + this.id, "status: queued"};
+        ArrayList<Model> borrowings = borrowingModel.find(filters);
+
+
+        // add borrowings to the waiting queue.
+        for (Model borrowing: borrowings){
+            waitingQueue.enqueueExisting(borrowing);
+        }
+
+        return waitingQueue;
+    }
+
     public String getAuthorName() {
-        return "";
+        Model author = getAuthor();
+        return author.get("first_name") + " " + author.get("last_name");
+    }
+
+    public Model getAuthor(){
+        return authorModel.findById(this.author_id);
     }
 
     @Override

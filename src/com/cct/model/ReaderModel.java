@@ -60,7 +60,7 @@ public class ReaderModel extends Model {
     }
 
     @Override
-    String get(String attribute) {
+    public String get(String attribute) {
         switch (attribute){
             case "id":
                 return String.valueOf(getId());

@@ -14,9 +14,13 @@ public class BorrowingModel extends Model {
     private String date_borrowed;
     private String date_returned;
     private String status;
+    private ReaderModel readerModel;
 
     // Load info from the csv files when the class is instantiated.
-    public BorrowingModel() { loadData(); }
+    public BorrowingModel(ReaderModel readerModel) {
+        this.readerModel = readerModel;
+        loadData();
+    }
 
     // Private constructor that can be invoked by the create method.
     private BorrowingModel(int id, int book_id, int reader_id, String date_borrowed,
@@ -68,10 +72,18 @@ public class BorrowingModel extends Model {
         return newBorrowing;
     }
 
+    /**
+     * Set relationships for future joins in the queries.
+     * @param readerModel pointer of the model reader.
+     */
+    public void setRelations(ReaderModel readerModel){
+        this.readerModel = readerModel;
+    }
+
     @Override
     void loadData() {
         // load all the information from the csv files in the folder database and store the results in memory.
-        RetrieveData.loadBorrowings(this);
+        RetrieveData.loadBorrowings(this, this.readerModel);
     }
 
     /**
@@ -80,7 +92,7 @@ public class BorrowingModel extends Model {
      * @return value of the attribute as string
      */
     @Override
-    String get(String attribute) {
+    public String get(String attribute) {
         switch (attribute){
             case "id":
                 return String.valueOf(getId());
@@ -94,6 +106,8 @@ public class BorrowingModel extends Model {
                 return getDate_returned();
             case "status":
                 return getStatus();
+            case "reader":
+                return getReaderName();
             default:
                 return null;
         }
@@ -170,9 +184,18 @@ public class BorrowingModel extends Model {
         this.status = status;
     }
 
+    public String getReaderName() {
+        Model author = getReader();
+        return "("+this.reader_id + ") " + author.get("name");
+    }
+
+    public Model getReader(){
+        return readerModel.findById(this.reader_id);
+    }
+
     @Override
     public String toString() {
-        return "ID: "+this.id+" - Book: "+this.book_id+" - Reader: "+this.reader_id
+        return "ID: "+this.id+" - Book: "+this.book_id+" - Reader: "+getReaderName()
                 +" - Date borrowed: "+this.date_borrowed+" - Date returned: "+this.date_returned
                 +" - Status: "+this.status;
     }

@@ -1,17 +1,17 @@
 package com.cct.model;
 
 public class NodeQueue {
-    private BorrowingModel borrowingModel;
+    private Model borrowingModel;
     private NodeQueue previous;
     private NodeQueue next;
 
-    public NodeQueue(BorrowingModel borrowingModel, NodeQueue previous, NodeQueue next){
+    public NodeQueue(Model borrowingModel, NodeQueue previous, NodeQueue next){
         this.previous = previous;
         this.next = next;
         this.borrowingModel = borrowingModel;
     }
 
-    public BorrowingModel getBorrowing() {
+    public Model getBorrowing() {
         return this.borrowingModel;
     }
 

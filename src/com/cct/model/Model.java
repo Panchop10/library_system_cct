@@ -25,7 +25,7 @@ public abstract class Model {
      * @param attribute that is going to be gotten from the element
      * @return String with the value of the attribute.
      */
-    abstract String get(String attribute);
+    abstract public String get(String attribute);
 
     /**
      * Return name of the attributes of the class
@@ -43,6 +43,14 @@ public abstract class Model {
      * @return the model as csv
      */
     abstract public String toCSV();
+
+    /**
+     * Optional method to get waiting queue.
+     * @return custom waiting queue.
+     */
+    public BorrowingQueue getWaitingQueue(){
+        return null;
+    }
 
     /**
      * Inserts an ArrayList of Elements to the database, if there is an error during the process, it will roll back the
