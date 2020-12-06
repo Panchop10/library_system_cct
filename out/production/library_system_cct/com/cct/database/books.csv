@@ -1,7 +1,4 @@
 id,name,author_id,isbn
-7,Introduction to Algorithms,7,9780262033848
-8,Refactoring: Improving the Design of Existing Code,8,9780201485677
-9,Analysis Patterns,8,9780201895421
 10,Design Patterns: Elements of Reusable Object-Oriented Software,9,0201633612
 11,Foundations of Computational Science,9,0387004505
 12,Code Complete: A Practical Handbook of Software Construction,10,0790145196705
@@ -11,3 +8,6 @@ id,name,author_id,isbn
 4,The Pragmatic Programmer: Your Journey to Mastery,3,9780135957059
 5,The Art of Computer Programming,5,0201853922
 6,Programming Pearls,6,0785342657883
+7,Introduction to Algorithms,7,9780262033848
+8,Refactoring: Improving the Design of Existing Code,8,9780201485677
+9,Analysis Patterns,8,9780201895421

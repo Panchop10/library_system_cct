@@ -1,11 +1,11 @@
 package com.cct.controller;
 
-import com.cct.model.Book;
+import com.cct.model.BookModel;
 
 import java.util.ArrayList;
 
 public class MainController {
-    public void getBooksSorted(ArrayList<Book> bookList){
+    public void getBooksSorted(ArrayList<BookModel> bookList){
 //        BookController bookController = new BookController();
 //        ArrayList<Book> listBooks = bookController.sortBookByName(bookList);
 //
