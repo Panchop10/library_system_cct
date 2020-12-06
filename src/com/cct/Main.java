@@ -1,7 +1,6 @@
 package com.cct;
 
-import com.cct.model.BookModel;
-import com.cct.model.Model;
+import com.cct.model.*;
 
 import java.util.ArrayList;
 
@@ -42,6 +41,33 @@ public class Main {
         if (sortedList != null) {
             for (Model book: sortedList) {
                 System.out.println(book);
+            }
+        }
+
+        AuthorModel authorModel = new AuthorModel();
+        ArrayList<Model> sortedAuthors = authorModel.find();
+
+        if (sortedAuthors != null) {
+            for (Model author: sortedAuthors) {
+                System.out.println(author);
+            }
+        }
+
+        ReaderModel readerModel = new ReaderModel();
+        ArrayList<Model> sortedReaders = readerModel.find();
+
+        if (sortedReaders != null) {
+            for (Model reader: sortedReaders) {
+                System.out.println(reader);
+            }
+        }
+
+        BorrowingModel borrowingModel = new BorrowingModel();
+        ArrayList<Model> sortedBorrowings = borrowingModel.find();
+
+        if (sortedBorrowings != null) {
+            for (Model borrowing: sortedBorrowings) {
+                System.out.println(borrowing);
             }
         }
 

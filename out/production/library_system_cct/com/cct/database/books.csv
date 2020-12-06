@@ -1,7 +1,4 @@
 id,name,author_id,isbn
-10,Design Patterns: Elements of Reusable Object-Oriented Software,9,0201633612
-11,Foundations of Computational Science,9,0387004505
-12,Code Complete: A Practical Handbook of Software Construction,10,0790145196705
 1,Invent Your Own Computer Games with Python,1,9781593277956
 2,Automate the Boring Stuff with Python,1,9781593275990
 3,Clean Code: A Handbook of Agile Software Craftsmanship,2,9780132350884
@@ -11,3 +8,6 @@ id,name,author_id,isbn
 7,Introduction to Algorithms,7,9780262033848
 8,Refactoring: Improving the Design of Existing Code,8,9780201485677
 9,Analysis Patterns,8,9780201895421
+10,Design Patterns: Elements of Reusable Object-Oriented Software,9,0201633612
+11,Foundations of Computational Science,9,0387004505
+12,Code Complete: A Practical Handbook of Software Construction,10,0790145196705
