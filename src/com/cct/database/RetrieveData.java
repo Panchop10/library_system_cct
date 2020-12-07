@@ -155,7 +155,7 @@ public class RetrieveData {
                             textBorrowing[4],
                             textBorrowing[5]
                     );
-                    newBorrowing.setRelations(readerModel);
+                    newBorrowing.setRelationReader(readerModel);
                     arrayBorrowing.add(newBorrowing);
                 }
                 currentLine++;

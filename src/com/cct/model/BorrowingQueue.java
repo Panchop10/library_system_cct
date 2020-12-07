@@ -31,6 +31,9 @@ public class BorrowingQueue {
                 "queued"
         );
 
+        newBorrowing.setRelationReader(borrowingModel.getReaderModel());
+        newBorrowing.setRelationBook(borrowingModel.getBookModel());
+
         enqueueExisting(newBorrowing);
     }
 

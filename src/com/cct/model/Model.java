@@ -53,6 +53,11 @@ public abstract class Model {
     }
 
     /**
+     * Optional method to set relationship with books;
+     */
+    public void setRelationBook(BookModel bookModel){};
+
+    /**
      * Inserts an ArrayList of Elements to the database, if there is an error during the process, it will roll back the
      * database to the previous state.
      * @param newElements ArrayList of new elements to be added to the database.

@@ -12,6 +12,7 @@ public class BookModel extends Model{
     private int id;
     private String name;
     private int author_id;
+    private String author_name;
     private String isbn;
     private BorrowingModel borrowingModel;
     private AuthorModel authorModel;
@@ -149,6 +150,10 @@ public class BookModel extends Model{
         return this.author_id;
     }
 
+    public String getAuthor_name() {
+        return getAuthorName();
+    }
+
     public void setAuthor_id(String author_id) {
         this.author_id = Integer.parseInt(author_id);
     }
@@ -193,6 +198,6 @@ public class BookModel extends Model{
 
     @Override
     public String toString() {
-        return "ID: "+this.id+" - Name: "+this.name+" - Author: "+this.author_id+" - ISBN: "+this.isbn;
+        return "ID: "+this.id+" - Title: "+this.name+" - Author: "+getAuthorName()+" - ISBN: "+this.isbn;
     }
 }
